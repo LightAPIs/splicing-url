@@ -32,5 +32,10 @@
     "vue-cli-plugin-chrome-ext": "~0.0.5",
     "vue-template-compiler": "^2.6.11",
     "zip-webpack-plugin": "^4.0.1"
+  },
+  "standard-version": {
+    "scripts": {
+      "posttag": "npm run build"
+    }
   }
 }
