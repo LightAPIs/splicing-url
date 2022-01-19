@@ -1,0 +1,38 @@
+{
+  "extDes": {
+    "message": "快速拼接当前的网址。"
+  },
+  "optionsTitle": {
+    "message": "选项"
+  },
+  "optionsInputPlaceholder": {
+    "message": "请输入网址"
+  },
+  "optionsSplice": {
+    "message": "用于拼接的网址头部:"
+  },
+  "optionsType": {
+    "message": "用于拼接的当前网址部分: "
+  },
+  "optionsOpen": {
+    "message": "打开方式: "
+  },
+  "optionsCurrent": {
+    "message": "当前标签页"
+  },
+  "optionsNewTab": {
+    "message": "新建标签页"
+  },
+  "optionsNewWindow": {
+    "message": "新建窗口"
+  },
+  "optionsShortcuts": {
+    "message": "设置键盘快捷键"
+  },
+  "notifySave": {
+    "message": "保存"
+  },
+  "notifySaveMsg": {
+    "message": "已将配置保存至存储中。"
+  }
+}

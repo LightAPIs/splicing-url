@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Splicing URL",
+  "description": "__MSG_extDes__",
+  "version": "1.0.0",
+  "author": "pana",
+  "homepage_url": "https://github.com/LightAPIs/splicing-url",
+  "default_locale": "en",
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "browser_action": {
+    "default_title": "Splicing URL"
+  },
+  "permissions": ["storage", "activeTab"]
+}

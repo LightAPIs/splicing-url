@@ -1,0 +1,38 @@
+{
+  "extDes": {
+    "message": "Quickly splicing the current URL."
+  },
+  "optionsTitle": {
+    "message": "Options"
+  },
+  "optionsInputPlaceholder": {
+    "message": "Enter the URL"
+  },
+  "optionsSplice": {
+    "message": "URL header for splicing:"
+  },
+  "optionsType": {
+    "message": "The current URL section for splicing: "
+  },
+  "optionsOpen": {
+    "message": "Open mode: "
+  },
+  "optionsCurrent": {
+    "message": "Current tab"
+  },
+  "optionsNewTab": {
+    "message": "New tab"
+  },
+  "optionsNewWindow": {
+    "message": "New window"
+  },
+  "optionsShortcuts": {
+    "message": "Set keyboard shortcut"
+  },
+  "notifySave": {
+    "message": "Save"
+  },
+  "notifySaveMsg": {
+    "message": "The settings have been saved to storage."
+  }
+}
