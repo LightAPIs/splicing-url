@@ -1,24 +1,19 @@
-# splicing-url
+# Splicing URL
 
-## Project setup
-```
-npm install
-```
+## Installation
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Start the browser and type `chrome://extensions/` in the address bar to enter Extensions Page, click the switch in the upper right corner of the webpage to turn on "Developer mode":
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Go to the [Releases](https://github.com/LightAPIs/splicing-url/releases/latest) to download the extension package `zip` file and unzip it. And click "Load unpacked" button, select the root directory of the previously unzipped file to complete the installation of the extension.
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Related projects
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+This project is based on the following open source projects:
+
+- [zloirock/core-js](https://github.com/zloirock/core-js)
+- [ElemeFE/element](https://github.com/ElemeFE/element)
+- [vuejs/vue](https://github.com/vuejs/vue)
+
+## License
+
+[MIT](/LICENSE)
