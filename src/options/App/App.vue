@@ -67,7 +67,7 @@ export default {
     onShortcuts(e) {
       e.stopPropagation();
       chrome.tabs.create({
-        url: 'chrome://extensions/shortcuts#:~:text=Splicing%20URL%20',
+        url: 'chrome://extensions/shortcuts#:~:text=Splicing%20URL',
       });
     },
   },
