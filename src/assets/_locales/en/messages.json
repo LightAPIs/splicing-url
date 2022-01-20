@@ -29,10 +29,22 @@
   "optionsShortcuts": {
     "message": "Set keyboard shortcut"
   },
-  "notifySave": {
-    "message": "Save"
+  "optionsAdd": {
+    "message": "Add"
   },
-  "notifySaveMsg": {
-    "message": "The settings have been saved to storage."
+  "optionsConfig": {
+    "message": "Config"
+  },
+  "optionsDel": {
+    "message": "Delete"
+  },
+  "optionsActive": {
+    "message": "Active"
+  },
+  "optionsEdit": {
+    "message": "Edit"
+  },
+  "optionsSave": {
+    "message": "Save"
   }
 }

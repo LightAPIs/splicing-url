@@ -2,8 +2,30 @@
 
 chrome.browserAction.onClicked.addListener(() => {
   if (!chrome.runtime.lastError) {
-    chrome.storage.local.get(['prefix', 'type', 'mode'], res => {
-      const { prefix = '', type = '1', mode = '1' } = res;
+    chrome.storage.local.get(['groups', 'active'], res => {
+      const { groups = [], active = '' } = res;
+      let used = {};
+      if (groups.length === 0) {
+        used = {
+          id: 'none',
+          prefix: '',
+          type: '1',
+          mode: '1',
+        };
+      } else {
+        let had = false;
+        for (const item of groups) {
+          if (item.id === active) {
+            used = item;
+            had = true;
+            break;
+          }
+        }
+
+        !had && (used = groups[0]);
+      }
+
+      const { prefix = '', type = '1', mode = '1' } = used;
       let pre = prefix;
       try {
         const preUri = new URL(prefix);

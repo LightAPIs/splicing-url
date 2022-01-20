@@ -29,10 +29,22 @@
   "optionsShortcuts": {
     "message": "设置键盘快捷键"
   },
-  "notifySave": {
-    "message": "保存"
+  "optionsAdd": {
+    "message": "新增"
   },
-  "notifySaveMsg": {
-    "message": "已将配置保存至存储中。"
+  "optionsConfig": {
+    "message": "配置"
+  },
+  "optionsDel": {
+    "message": "删除"
+  },
+  "optionsActive": {
+    "message": "激活"
+  },
+  "optionsEdit": {
+    "message": "编辑"
+  },
+  "optionsSave": {
+    "message": "保存"
   }
 }

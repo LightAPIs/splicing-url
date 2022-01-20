@@ -2,67 +2,95 @@
   <div id="options-app">
     <el-container class="options-container">
       <el-header class="options-header">
-        <el-button type="primary" @click="onSave">{{ $ui.get('notifySave') }}</el-button>
+        <el-button type="primary" @click="onAdd">{{ $ui.get('optionsAdd') }}</el-button>
+        <a class="options-shortcuts" target="_blank" @click="onShortcuts">
+          {{ $ui.get('optionsShortcuts') }}
+        </a>
       </el-header>
       <el-main>
-        <el-input v-model="prefix" autofocus :placeholder="$ui.get('optionsInputPlaceholder')">
-          <template slot="prepend">{{ $ui.get('optionsSplice') }}</template>
-        </el-input>
-        <div class="options-settings">
-          <span class="options-label">
-            {{ $ui.get('optionsType') }}
-          </span>
-          <el-radio v-model="type" label="1" title="e.g., hppts://www.example.com/path/to/test.php?type=0#extra">href</el-radio>
-          <el-radio v-model="type" label="2" title="e.g., www.example.com/path/to/test.php?type=0#extra">link</el-radio>
-          <el-radio v-model="type" label="3" title="e.g., hppts://www.example.com">origin</el-radio>
-          <el-radio v-model="type" label="4" title="e.g., www.example.com">hostname</el-radio>
-          <el-radio v-model="type" label="5" title="e.g., /path/to/test.php?type=0#extra">path</el-radio>
-        </div>
-        <div class="options-settings">
-          <span class="options-label">
-            {{ $ui.get('optionsOpen') }}
-          </span>
-          <el-radio v-model="mode" label="1">{{ $ui.get('optionsCurrent') }}</el-radio>
-          <el-radio v-model="mode" label="2">{{ $ui.get('optionsNewTab') }}</el-radio>
-          <el-radio v-model="mode" label="3">{{ $ui.get('optionsNewWindow') }}</el-radio>
-        </div>
-        <div class="options-settings">
-          <a class="options-shortcuts" target="_blank" @click="onShortcuts">
-            {{ $ui.get('optionsShortcuts') }}
-          </a>
-        </div>
+        <options-group
+          v-for="(item, index) in groups"
+          :key="index"
+          :id="item.id"
+          :index="index + 1"
+          :prefix="item.prefix"
+          :type-value="item.type"
+          :mode="item.mode"
+          :highlight="active === item.id"
+          @saveEvent="onSave"
+          @deleteEvent="onDelete"
+          @activeEvent="onActive"
+        ></options-group>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
+import OptionsGroup from '../../components/OptionsGroup.vue';
+
 export default {
   name: 'App',
+  components: {
+    OptionsGroup,
+  },
   data() {
     return {
-      prefix: '',
-      type: '1',
-      mode: '1',
+      groups: [],
+      active: '',
     };
   },
   methods: {
-    onSave() {
-      chrome.storage.local.set(
-        {
-          prefix: this.prefix || '',
-          type: this.type || '1',
-          mode: this.mode || '1',
-        },
-        () => {
-          this.$notify({
-            title: this.$ui.get('notifySave'),
-            message: this.$ui.get('notifySaveMsg'),
-            type: 'success',
-            duration: 2000,
-          });
+    onSave(event) {
+      const { id, key, val } = event;
+      for (const item of this.groups) {
+        if (item.id === id) {
+          item[key] = val;
+          break;
         }
-      );
+      }
+
+      chrome.storage.local.set({
+        groups: this.groups || [],
+        active: this.active || '',
+      });
+    },
+    onDelete(id) {
+      if (this.groups.length > 1 && id !== this.active) {
+        let del = false;
+        for (let i = 0; i < this.groups.length; i++) {
+          if (this.groups[i].id === id) {
+            this.groups.splice(i, 1);
+            del = true;
+            break;
+          }
+        }
+
+        del &&
+          chrome.storage.local.set({
+            groups: this.groups || [],
+          });
+      }
+    },
+    onActive(id) {
+      if (id !== this.active) {
+        this.active = id;
+        chrome.storage.local.set({
+          active: this.active || '',
+        });
+      }
+    },
+    onAdd() {
+      this.groups.push({
+        id: this.$ui.uuid(),
+        prefix: '',
+        type: '1',
+        mode: '1',
+      });
+
+      chrome.storage.local.set({
+        groups: this.groups || [],
+      });
     },
     onShortcuts(e) {
       e.stopPropagation();
@@ -72,17 +100,30 @@ export default {
     },
   },
   mounted() {
-    chrome.storage.local.get(['prefix', 'type', 'mode'], res => {
-      const { prefix, type, mode } = res;
-      this.prefix = prefix || '';
-      this.type = type || '1';
-      this.mode = mode || '1';
+    chrome.storage.local.get(['groups', 'active'], res => {
+      const { groups = [], active = '' } = res;
+      if (groups.length === 0) {
+        const id = this.$ui.uuid();
+        this.groups.push({
+          id,
+          prefix: '',
+          type: '1',
+          mode: '1',
+        });
+        this.active = id;
+      } else {
+        this.groups = Object.assign([], groups);
+        this.active = active || this.groups[0].id;
+      }
     });
   },
 };
 </script>
 
 <style>
+.options-header {
+  height: 40px;
+}
 .options-settings {
   margin-top: 25px;
 }
@@ -94,7 +135,21 @@ export default {
   font-size: 18px;
 }
 .options-shortcuts {
+  float: right;
   color: #1890ff;
   cursor: pointer;
+}
+.options-group {
+  margin-bottom: 15px;
+}
+.options-group-header {
+  font-size: 24px;
+}
+.options-group-highlight {
+  box-shadow: 0px 0px 10px 5px green !important;
+}
+.float-right {
+  float: right;
+  margin-left: 10px;
 }
 </style>
