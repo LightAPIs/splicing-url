@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/LightAPIs/splicing-url/compare/v1.0.1...v1.1.0) (2022-01-20)
+
+
+### Features
+
+* **group:** Support group ([53a78bf](https://github.com/LightAPIs/splicing-url/commit/53a78bf160837f529ce984d9979242c3762934ff))
+
 ### [1.0.1](https://github.com/LightAPIs/splicing-url/compare/v1.0.0...v1.0.1) (2022-01-19)
 
 
