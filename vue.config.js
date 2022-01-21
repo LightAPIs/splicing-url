@@ -59,7 +59,6 @@ module.exports = {
           compiler.hooks.done.tap('delBGFile', _compilation => {
             try {
               const bgFile = `${path.resolve(folderName)}/background.html`;
-              console.log(bgFile);
               if (fs.existsSync(bgFile)) {
                 fs.unlinkSync(bgFile);
               }
