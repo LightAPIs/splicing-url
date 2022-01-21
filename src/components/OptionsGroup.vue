@@ -12,7 +12,7 @@
       <div>
         <el-row type="flex" :gutter="10">
           <el-col :span="20">
-            <el-input v-model="vPrefix" :disabled="!isEdit" :placeholder="$ui.get('optionsInputPlaceholder')">
+            <el-input v-model="vPrefix" :disabled="!isEdit" :placeholder="$ui.get('optionsInputPlaceholder')" @keydown.native="onKeyDown">
               <template slot="prepend">{{ $ui.get('optionsSplice') }}</template>
             </el-input>
           </el-col>
@@ -102,6 +102,11 @@ export default {
         });
       } else {
         this.isEdit = true;
+      }
+    },
+    onKeyDown(event) {
+      if (event.keyCode === 13 && this.isEdit) {
+        this.onEdit();
       }
     },
     onTypeChange(value) {
