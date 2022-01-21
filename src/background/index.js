@@ -6,17 +6,24 @@ import operation from '../common/operation';
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.get(['page', 'groups'], res => {
     const { page, groups = [] } = res;
+    const contexts = [];
+    if (process.env.VUE_APP_MANIFEST === 'v3') {
+      contexts.push('action');
+    } else {
+      contexts.push('browser_action');
+    }
+
     chrome.contextMenus.create({
       id: 'contextPage',
       type: 'checkbox',
       checked: page === true,
-      title: ui.get('contextPage'),
-      contexts: ['browser_action'],
+      title: ui.getMessage('contextPage'),
+      contexts,
     });
 
     if (page && groups.length > 0) {
       groups.forEach((item, index) => {
-        ui.pageContextMenu(item.id, item.name || ui.get('optionsConfig') + ' ' + (index + 1).toString(), true);
+        ui.pageContextMenu(item.id, item.name || ui.getMessage('optionsConfig') + ' ' + (index + 1).toString(), true);
       });
     }
   });
@@ -34,7 +41,7 @@ chrome.contextMenus.onClicked.addListener(info => {
 
         if (groups.length > 0) {
           groups.forEach((item, index) => {
-            ui.pageContextMenu(item.id, item.name || ui.get('optionsConfig') + ' ' + (index + 1).toString(), checked);
+            ui.pageContextMenu(item.id, item.name || ui.getMessage('optionsConfig') + ' ' + (index + 1).toString(), checked);
           });
         }
       } else {
@@ -45,11 +52,22 @@ chrome.contextMenus.onClicked.addListener(info => {
   }
 });
 
-chrome.browserAction.onClicked.addListener(() => {
-  if (!chrome.runtime.lastError) {
-    chrome.storage.local.get(['groups', 'active'], res => {
-      const { groups = [], active = '' } = res;
-      operation.open(groups, active);
-    });
-  }
-});
+if (process.env.VUE_APP_MANIFEST === 'v3') {
+  chrome.action.onClicked.addListener(() => {
+    if (!chrome.runtime.lastError) {
+      chrome.storage.local.get(['groups', 'active'], res => {
+        const { groups = [], active = '' } = res;
+        operation.open(groups, active);
+      });
+    }
+  });
+} else {
+  chrome.browserAction.onClicked.addListener(() => {
+    if (!chrome.runtime.lastError) {
+      chrome.storage.local.get(['groups', 'active'], res => {
+        const { groups = [], active = '' } = res;
+        operation.open(groups, active);
+      });
+    }
+  });
+}

@@ -1,9 +1,11 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipWebpackPlugin = require('zip-webpack-plugin');
+const fs = require('fs');
 const path = require('path');
 const packageInfo = require('./package.json');
 
 const productionMode = process.env.NODE_ENV === 'production';
+const manifestV3 = process.env.VUE_APP_MANIFEST === 'v3';
 
 // Generate pages object
 const pages = {};
@@ -19,10 +21,12 @@ chromeName.forEach(name => {
   };
 });
 
-const folderName = productionMode ? 'build' : 'dist';
+const modeName = productionMode ? 'build' : 'dist';
+const manifestName = manifestV3 ? 'v3' : 'v2';
+const folderName = `${modeName}/${manifestName}`;
 const copyFiles = [
   {
-    from: path.resolve(`src/manifest.${productionMode ? 'production' : 'development'}.json`),
+    from: path.resolve(`src/manifest/${manifestName}/manifest.${productionMode ? 'production' : 'development'}.json`),
     to: `${path.resolve(folderName)}/manifest.json`,
   },
 ];
@@ -47,6 +51,26 @@ module.exports = {
       })
     );
 
+    if (manifestV3) {
+      config.devtool = 'inline-source-map';
+
+      config.plugins.push({
+        apply: compiler => {
+          compiler.hooks.done.tap('delBGFile', _compilation => {
+            try {
+              const bgFile = `${path.resolve(folderName)}/background.html`;
+              console.log(bgFile);
+              if (fs.existsSync(bgFile)) {
+                fs.unlinkSync(bgFile);
+              }
+            } catch (e) {
+              console.log(e);
+            }
+          });
+        },
+      });
+    }
+
     if (productionMode) {
       Object.assign(config.optimization.minimizer[0].options.terserOptions.compress, {
         warnings: false,
@@ -58,7 +82,7 @@ module.exports = {
       config.plugins.push(
         new ZipWebpackPlugin({
           path: path.resolve('archive'),
-          filename: `${packageInfo.name}_v${packageInfo.version}.zip`,
+          filename: `${packageInfo.name}_manifest-${manifestName}_v${packageInfo.version}.zip`,
         })
       );
     }

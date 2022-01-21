@@ -2,6 +2,24 @@
 import { v4 } from 'uuid';
 
 const ui = {
+  getMessage(key) {
+    if (process.env.VUE_APP_MANIFEST === 'v3') {
+      const message =
+        navigator.language === 'zh-CN'
+          ? {
+              contextPage: '在网页上添加右键菜单',
+              optionsConfig: '配置',
+            }
+          : {
+              contextPage: 'Add context menu to page',
+              optionsConfig: 'Config',
+            };
+
+      return message[key];
+    } else {
+      chrome.i18n.getMessage(key);
+    }
+  },
   get(...arg) {
     return chrome.i18n.getMessage(...arg);
   },
