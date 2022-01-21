@@ -13,6 +13,7 @@
           :key="index"
           :id="item.id"
           :index="index + 1"
+          :name="item.name"
           :prefix="item.prefix"
           :type-value="item.type"
           :mode="item.mode"
@@ -83,6 +84,7 @@ export default {
     onAdd() {
       this.groups.push({
         id: this.$ui.uuid(),
+        name: '',
         prefix: '',
         type: '1',
         mode: '1',
@@ -106,6 +108,7 @@ export default {
         const id = this.$ui.uuid();
         this.groups.push({
           id,
+          name: '',
           prefix: '',
           type: '1',
           mode: '1',

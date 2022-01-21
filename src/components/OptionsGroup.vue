@@ -2,9 +2,10 @@
   <div class="options-group">
     <el-card :class="{ 'options-group-highlight': highlight }" shadow="always">
       <div slot="header">
-        <span class="options-group-header">{{ $ui.get('optionsConfig') + ' ' + index.toString() }}</span>
+        <span class="options-group-header">{{ vName || $ui.get('optionsConfig') + ' ' + index.toString() }}</span>
         <el-button v-if="!highlight" class="float-right" type="danger" @click="onDelete">{{ $ui.get('optionsDel') }}</el-button>
         <el-button v-if="!highlight" class="float-right" type="success" @click="onActive">{{ $ui.get('optionsActive') }}</el-button>
+        <el-button class="float-right" @click="onRename">{{ $ui.get('optionsRename') }}</el-button>
       </div>
       <div>
         <el-row type="flex" :gutter="10">
@@ -58,6 +59,10 @@ export default {
       type: Number,
       required: true,
     },
+    name: {
+      type: String,
+      default: '',
+    },
     prefix: {
       type: String,
       default: '',
@@ -77,6 +82,7 @@ export default {
   },
   data() {
     return {
+      vName: this.name,
       vPrefix: this.prefix,
       vType: this.typeValue,
       vMode: this.mode,
@@ -115,6 +121,22 @@ export default {
     },
     onActive() {
       this.$emit('activeEvent', this.id);
+    },
+    onRename() {
+      this.$msg
+        .prompt(this.$ui.get('optionsEnterName'), this.$ui.get('optionsRename'), {
+          confirmButtonText: this.$ui.get('optionsConfirm'),
+          cancelButtonText: this.$ui.get('optionsCancel'),
+        })
+        .then(({ value }) => {
+          this.vName = value;
+          this.$emit('saveEvent', {
+            id: this.id,
+            key: 'name',
+            val: this.vName,
+          });
+        })
+        .catch(() => {});
     },
   },
 };

@@ -46,5 +46,17 @@
   },
   "optionsSave": {
     "message": "Save"
+  },
+  "optionsRename": {
+    "message": "Rename"
+  },
+  "optionsEnterName": {
+    "message": "Enter name"
+  },
+  "optionsConfirm": {
+    "message": "OK"
+  },
+  "optionsCancel": {
+    "message": "Cancel"
   }
 }

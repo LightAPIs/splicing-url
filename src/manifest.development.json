@@ -20,9 +20,6 @@
   "browser_action": {
     "default_title": "Splicing URL (Dev)"
   },
-  "permissions": [
-    "storage",
-    "activeTab"
-  ],
+  "permissions": ["storage", "activeTab"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

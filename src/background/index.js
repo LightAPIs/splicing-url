@@ -8,6 +8,7 @@ chrome.browserAction.onClicked.addListener(() => {
       if (groups.length === 0) {
         used = {
           id: 'none',
+          name: '',
           prefix: '',
           type: '1',
           mode: '1',
