@@ -148,6 +148,9 @@ export default {
 .options-group-header {
   font-size: 24px;
 }
+.options-group-header-highlight {
+  color: #31b931;
+}
 .options-group-highlight {
   box-shadow: 0px 0px 10px 5px green !important;
 }

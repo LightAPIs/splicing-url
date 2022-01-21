@@ -2,10 +2,12 @@
   <div class="options-group">
     <el-card :class="{ 'options-group-highlight': highlight }" shadow="always">
       <div slot="header">
-        <span class="options-group-header">{{ vName || $ui.get('optionsConfig') + ' ' + index.toString() }}</span>
+        <span class="options-group-header" :class="{ 'options-group-header-highlight': highlight }">{{
+          vName || $ui.get('optionsConfig') + ' ' + index.toString()
+        }}</span>
         <el-button v-if="!highlight" class="float-right" type="danger" @click="onDelete">{{ $ui.get('optionsDel') }}</el-button>
         <el-button v-if="!highlight" class="float-right" type="success" @click="onActive">{{ $ui.get('optionsActive') }}</el-button>
-        <el-button class="float-right" @click="onRename">{{ $ui.get('optionsRename') }}</el-button>
+        <el-button class="float-right" type="info" @click="onRename">{{ $ui.get('optionsRename') }}</el-button>
       </div>
       <div>
         <el-row type="flex" :gutter="10">
