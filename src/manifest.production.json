@@ -20,8 +20,5 @@
   "browser_action": {
     "default_title": "Splicing URL"
   },
-  "permissions": [
-    "storage",
-    "activeTab"
-  ]
+  "permissions": ["storage", "activeTab", "contextMenus"]
 }

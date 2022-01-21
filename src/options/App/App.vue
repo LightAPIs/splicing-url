@@ -8,20 +8,22 @@
         </a>
       </el-header>
       <el-main>
-        <options-group
-          v-for="(item, index) in groups"
-          :key="index"
-          :id="item.id"
-          :index="index + 1"
-          :name="item.name"
-          :prefix="item.prefix"
-          :type-value="item.type"
-          :mode="item.mode"
-          :highlight="active === item.id"
-          @saveEvent="onSave"
-          @deleteEvent="onDelete"
-          @activeEvent="onActive"
-        ></options-group>
+        <template v-for="(item, index) in groups">
+          <options-group
+            v-if="exists.includes(item.id)"
+            :key="index"
+            :id="item.id"
+            :index="index + 1"
+            :name="item.name"
+            :prefix="item.prefix"
+            :type-value="item.type"
+            :mode="item.mode"
+            :highlight="active === item.id"
+            @saveEvent="onSave"
+            @deleteEvent="onDelete"
+            @activeEvent="onActive"
+          ></options-group>
+        </template>
       </el-main>
     </el-container>
   </div>
@@ -39,38 +41,73 @@ export default {
     return {
       groups: [],
       active: '',
+      exists: [],
     };
   },
   methods: {
     onSave(event) {
       const { id, key, val } = event;
+      let update = false;
+      let index = 0;
       for (const item of this.groups) {
+        index++;
         if (item.id === id) {
           item[key] = val;
+          update = true;
           break;
         }
       }
 
-      chrome.storage.local.set({
-        groups: this.groups || [],
-        active: this.active || '',
-      });
+      if (update) {
+        const saveGroups = [];
+        this.groups.forEach(item => {
+          if (this.exists.includes(item.id)) {
+            saveGroups.push(item);
+          }
+        });
+        chrome.storage.local.set({
+          groups: saveGroups,
+        });
+
+        if (key === 'name') {
+          chrome.storage.local.get(['page'], res => {
+            const { page } = res;
+            if (page) {
+              this.$ui.updateContextMenu(id, val || this.$ui.get('optionsConfig') + ' ' + index.toString());
+            }
+          });
+        }
+      }
     },
     onDelete(id) {
-      if (this.groups.length > 1 && id !== this.active) {
+      if (this.exists.length > 1 && id !== this.active) {
         let del = false;
-        for (let i = 0; i < this.groups.length; i++) {
-          if (this.groups[i].id === id) {
-            this.groups.splice(i, 1);
+        for (let i = 0; i < this.exists.length; i++) {
+          if (this.exists[i] === id) {
+            this.exists.splice(i, 1);
             del = true;
             break;
           }
         }
 
-        del &&
-          chrome.storage.local.set({
-            groups: this.groups || [],
+        if (del) {
+          const saveGroups = [];
+          this.groups.forEach(item => {
+            if (this.exists.includes(item.id)) {
+              saveGroups.push(item);
+            }
           });
+          chrome.storage.local.set({
+            groups: saveGroups,
+          });
+
+          chrome.storage.local.get(['page'], res => {
+            const { page } = res;
+            if (page) {
+              this.$ui.pageContextMenu(id, '', false);
+            }
+          });
+        }
       }
     },
     onActive(id) {
@@ -82,16 +119,31 @@ export default {
       }
     },
     onAdd() {
+      const id = this.$ui.uuid();
       this.groups.push({
-        id: this.$ui.uuid(),
+        id,
         name: '',
         prefix: '',
         type: '1',
         mode: '1',
       });
+      this.exists.push(id);
 
+      const saveGroups = [];
+      this.groups.forEach(item => {
+        if (this.exists.includes(item.id)) {
+          saveGroups.push(item);
+        }
+      });
       chrome.storage.local.set({
-        groups: this.groups || [],
+        groups: saveGroups,
+      });
+
+      chrome.storage.local.get(['page'], res => {
+        const { page } = res;
+        if (page) {
+          this.$ui.pageContextMenu(id, this.$ui.get('optionsConfig') + ' ' + this.groups.length.toString(), true);
+        }
       });
     },
     onShortcuts(e) {
@@ -114,8 +166,12 @@ export default {
           mode: '1',
         });
         this.active = id;
+        this.exists.push(id);
       } else {
         this.groups = Object.assign([], groups);
+        this.groups.forEach(item => {
+          this.exists.push(item.id);
+        });
         this.active = active || this.groups[0].id;
       }
     });

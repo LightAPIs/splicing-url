@@ -58,5 +58,8 @@
   },
   "optionsCancel": {
     "message": "Cancel"
+  },
+  "contextPage": {
+    "message": "Add context menu to page"
   }
 }

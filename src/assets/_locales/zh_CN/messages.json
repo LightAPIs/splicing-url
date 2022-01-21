@@ -58,5 +58,8 @@
   },
   "optionsCancel": {
     "message": "取消"
+  },
+  "contextPage": {
+    "message": "在网页上添加右键菜单"
   }
 }
