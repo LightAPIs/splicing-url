@@ -26,6 +26,15 @@
   "optionsNewWindow": {
     "message": "New window"
   },
+  "optionsFocus": {
+    "message": "Focus: "
+  },
+  "optionsFront": {
+    "message": "Front"
+  },
+  "optionsBackground": {
+    "message": "Background"
+  },
   "optionsShortcuts": {
     "message": "Set keyboard shortcut"
   },
@@ -40,6 +49,9 @@
   },
   "optionsActive": {
     "message": "Active"
+  },
+  "optionsFreeze": {
+    "message": "Freeze"
   },
   "optionsEdit": {
     "message": "Edit"

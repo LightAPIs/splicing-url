@@ -26,6 +26,15 @@
   "optionsNewWindow": {
     "message": "新建窗口"
   },
+  "optionsFocus": {
+    "message": "激活焦点: "
+  },
+  "optionsFront": {
+    "message": "前台"
+  },
+  "optionsBackground": {
+    "message": "后台"
+  },
   "optionsShortcuts": {
     "message": "设置键盘快捷键"
   },
@@ -40,6 +49,9 @@
   },
   "optionsActive": {
     "message": "激活"
+  },
+  "optionsFreeze": {
+    "message": "冻结"
   },
   "optionsEdit": {
     "message": "编辑"

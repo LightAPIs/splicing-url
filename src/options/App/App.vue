@@ -18,10 +18,10 @@
             :prefix="item.prefix"
             :type-value="item.type"
             :mode="item.mode"
-            :highlight="active === item.id"
+            :focus="item.focus"
+            :active="item.active"
             @saveEvent="onSave"
             @deleteEvent="onDelete"
-            @activeEvent="onActive"
           ></options-group>
         </template>
       </el-main>
@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       groups: [],
-      active: '',
       exists: [],
     };
   },
@@ -80,7 +79,7 @@ export default {
       }
     },
     onDelete(id) {
-      if (this.exists.length > 1 && id !== this.active) {
+      if (this.exists.length > 1) {
         let del = false;
         for (let i = 0; i < this.exists.length; i++) {
           if (this.exists[i] === id) {
@@ -110,14 +109,6 @@ export default {
         }
       }
     },
-    onActive(id) {
-      if (id !== this.active) {
-        this.active = id;
-        chrome.storage.local.set({
-          active: this.active || '',
-        });
-      }
-    },
     onAdd() {
       const id = this.$ui.uuid();
       this.groups.push({
@@ -126,6 +117,8 @@ export default {
         prefix: '',
         type: '1',
         mode: '1',
+        focus: '1',
+        active: false,
       });
       this.exists.push(id);
 
@@ -154,26 +147,12 @@ export default {
     },
   },
   mounted() {
-    chrome.storage.local.get(['groups', 'active'], res => {
-      const { groups = [], active = '' } = res;
-      if (groups.length === 0) {
-        const id = this.$ui.uuid();
-        this.groups.push({
-          id,
-          name: '',
-          prefix: '',
-          type: '1',
-          mode: '1',
-        });
-        this.active = id;
-        this.exists.push(id);
-      } else {
-        this.groups = Object.assign([], groups);
-        this.groups.forEach(item => {
-          this.exists.push(item.id);
-        });
-        this.active = active || this.groups[0].id;
-      }
+    chrome.storage.local.get(['groups'], res => {
+      const { groups = [] } = res;
+      this.groups = Object.assign([], groups);
+      this.groups.forEach(item => {
+        this.exists.push(item.id);
+      });
     });
   },
 };

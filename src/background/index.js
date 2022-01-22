@@ -55,18 +55,18 @@ chrome.contextMenus.onClicked.addListener(info => {
 if (process.env.VUE_APP_MANIFEST === 'v3') {
   chrome.action.onClicked.addListener(() => {
     if (!chrome.runtime.lastError) {
-      chrome.storage.local.get(['groups', 'active'], res => {
-        const { groups = [], active = '' } = res;
-        operation.open(groups, active);
+      chrome.storage.local.get(['groups'], res => {
+        const { groups = [] } = res;
+        operation.open(groups);
       });
     }
   });
 } else {
   chrome.browserAction.onClicked.addListener(() => {
     if (!chrome.runtime.lastError) {
-      chrome.storage.local.get(['groups', 'active'], res => {
-        const { groups = [], active = '' } = res;
-        operation.open(groups, active);
+      chrome.storage.local.get(['groups'], res => {
+        const { groups = [] } = res;
+        operation.open(groups);
       });
     }
   });
