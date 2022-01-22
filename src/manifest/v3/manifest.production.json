@@ -22,9 +22,6 @@
   "commands": {
     "_execute_action": {}
   },
-  "permissions": [
-    "storage",
-    "activeTab",
-    "contextMenus"
-  ]
+  "permissions": ["storage", "activeTab", "contextMenus"],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmVKztVxpNLOyi9bj6CoIG68Lwu1e3/FpPoHNZGif+3NuIPWkBtobiUdErL4VIawuEpPVPWHnpHXGrzb/x6PzYcqHEt0ov5vLA/kHzd7gDrxaJ8yPHnQu0XoplYp9T/egg8/gZAMrtEXvyUvE/IPMgp4R6F29zwlQ023gCa8Kp1oq8wN0ftqnvtXRLWaOFFTwkbhHhxnsbUkFatiIIYQGCw8M9jIRMGFKRsaC3tJKCp7yelbGV6XbylqyOyoIvQGAPMOFKoQQTK6Cf6DGGM7XIjxfEkrq1DPTTp36NQMAR9yGOav/VjFoBg63twbUwLmnvZZJwnibevmdt30ajKwT/QIDAQAB"
 }

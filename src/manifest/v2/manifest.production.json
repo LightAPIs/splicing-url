@@ -20,9 +20,6 @@
   "browser_action": {
     "default_title": "Splicing URL"
   },
-  "permissions": [
-    "storage",
-    "activeTab",
-    "contextMenus"
-  ]
+  "permissions": ["storage", "activeTab", "contextMenus"],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm2BZSqaYBxbDzoBxonIucSaO7zfUvZropvFreSsizmYABvZTnfXJy36GkVsrmfuXQGZ/Xiu/SFZGL8o7W8ckYAodY719A7Ebsq1t4U/iYhEvohVYt8mlAKKsS8eg6WH5nA/3TwAiD5bwySg8r5uZsZEe7GBGajeyDdG4eOsUTIIeSqxZTsPNrV5bsbOnH3DrdnPX55YOB5Mj7/mT3exGnc4PFvqIePRszXuejzYmhsD7uATALNmU8cYv44i2X+G+mUAynBZs/iBtjtJWFXkc4jwpmL6cIwuTjzViR7ncckRTiGzZMZG47HBlCuDFtESMo95S8zSVs3TLpb+wfRZTdwIDAQAB"
 }
