@@ -19,6 +19,9 @@
   "action": {
     "default_title": "Splicing URL (Dev)"
   },
+  "commands": {
+    "_execute_action": {}
+  },
   "permissions": ["storage", "activeTab", "contextMenus"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"

@@ -19,5 +19,8 @@
   "action": {
     "default_title": "Splicing URL"
   },
+  "commands": {
+    "_execute_action": {}
+  },
   "permissions": ["storage", "activeTab", "contextMenus"]
 }
