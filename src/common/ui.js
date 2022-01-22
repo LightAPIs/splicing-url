@@ -17,7 +17,7 @@ const ui = {
 
       return message[key];
     } else {
-      chrome.i18n.getMessage(key);
+      return chrome.i18n.getMessage(key);
     }
   },
   get(...arg) {
