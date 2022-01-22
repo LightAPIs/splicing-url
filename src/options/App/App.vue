@@ -79,7 +79,7 @@ export default {
       }
     },
     onDelete(id) {
-      if (this.exists.length > 1) {
+      if (this.exists.length > 0) {
         let del = false;
         for (let i = 0; i < this.exists.length; i++) {
           if (this.exists[i] === id) {
