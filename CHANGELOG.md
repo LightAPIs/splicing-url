@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/LightAPIs/splicing-url/compare/v1.2.0...v2.0.0) (2022-06-30)
+
+
+### Features
+
+* Support splice multiple commands ([c6e30fc](https://github.com/LightAPIs/splicing-url/commit/c6e30fc2b3852b3690f87bc6c9411cd918fd4bf9))
+
 ## [1.2.0](https://github.com/LightAPIs/splicing-url/compare/v1.1.0...v1.2.0) (2022-01-22)
 
 
