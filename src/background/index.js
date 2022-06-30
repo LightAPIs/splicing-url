@@ -31,10 +31,8 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts,
     });
 
-    if (page && cmd_groups.length > 0) {
-      cmd_groups.forEach((item, index) => {
-        ui.pageContextMenu(item.id, item.name || ui.getMessage('optionsConfig') + ' ' + (index + 1).toString(), true);
-      });
+    if (page) {
+      ui.createAllContextMenu(cmd_groups);
     }
   });
 });
@@ -49,10 +47,10 @@ chrome.contextMenus.onClicked.addListener(info => {
           page: checked,
         });
 
-        if (cmd_groups.length > 0) {
-          cmd_groups.forEach((item, index) => {
-            ui.pageContextMenu(item.id, item.name || ui.getMessage('optionsConfig') + ' ' + (index + 1).toString(), checked);
-          });
+        if (checked) {
+          ui.createAllContextMenu(cmd_groups);
+        } else {
+          ui.removeAllContextMenu(cmd_groups);
         }
       } else {
         //* page-context
