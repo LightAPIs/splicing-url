@@ -9,10 +9,10 @@
     "message": "请输入网址"
   },
   "optionsSplice": {
-    "message": "用于拼接的网址头部:"
+    "message": "拼接网址的命令:"
   },
   "optionsType": {
-    "message": "用于拼接的当前网址部分: "
+    "message": "可选的参数: "
   },
   "optionsOpen": {
     "message": "打开方式: "

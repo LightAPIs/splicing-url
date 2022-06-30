@@ -14,7 +14,7 @@
       <div>
         <el-row type="flex" :gutter="10">
           <el-col :span="20">
-            <el-input v-model="vPrefix" :disabled="!isEdit" :placeholder="$ui.get('optionsInputPlaceholder')" @keydown.native="onKeyDown">
+            <el-input v-model="vCmd" :disabled="!isEdit" :placeholder="$ui.get('optionsInputPlaceholder')" @keydown.native="onKeyDown">
               <template slot="prepend">{{ $ui.get('optionsSplice') }}</template>
             </el-input>
           </el-col>
@@ -28,13 +28,13 @@
           <span class="options-label">
             {{ $ui.get('optionsType') }}
           </span>
-          <el-radio-group v-model="vType" @change="onTypeChange">
-            <el-radio label="1" title="e.g., hppts://www.example.com/path/to/test.php?type=0#extra">href</el-radio>
-            <el-radio label="2" title="e.g., www.example.com/path/to/test.php?type=0#extra">link</el-radio>
-            <el-radio label="3" title="e.g., hppts://www.example.com">origin</el-radio>
-            <el-radio label="4" title="e.g., www.example.com">hostname</el-radio>
-            <el-radio label="5" title="e.g., /path/to/test.php?type=0#extra">path</el-radio>
-          </el-radio-group>
+          <span class="options-tag-group">
+            <el-tag title="e.g., hppts://www.example.com/path/to/test.php?type=0#extra" @click="onTagClick('{HREF}')">{HREF}</el-tag>
+            <el-tag type="success" title="e.g., www.example.com/path/to/test.php?type=0#extra" @click="onTagClick('{LINK}')">{LINK}</el-tag>
+            <el-tag type="info" title="e.g., hppts://www.example.com" @click="onTagClick('{ORIGIN}')">{ORIGIN}</el-tag>
+            <el-tag type="warning" title="e.g., www.example.com" @click="onTagClick('{HOSTNAME}')">{HOSTNAME}</el-tag>
+            <el-tag type="danger" title="e.g., /path/to/test.php?type=0#extra" @click="onTagClick('{PATH}')">{PATH}</el-tag>
+          </span>
         </div>
         <div class="options-settings">
           <span class="options-label">
@@ -76,13 +76,9 @@ export default {
       type: String,
       default: '',
     },
-    prefix: {
+    cmd: {
       type: String,
       default: '',
-    },
-    typeValue: {
-      type: String,
-      default: '1',
     },
     mode: {
       type: String,
@@ -100,8 +96,7 @@ export default {
   data() {
     return {
       vName: this.name,
-      vPrefix: this.prefix,
-      vType: this.typeValue,
+      vCmd: this.cmd,
       vMode: this.mode,
       vFocus: this.focus,
       vActive: this.active,
@@ -114,8 +109,8 @@ export default {
         this.isEdit = false;
         this.$emit('saveEvent', {
           id: this.id,
-          key: 'prefix',
-          val: this.vPrefix,
+          key: 'cmd',
+          val: this.vCmd,
         });
       } else {
         this.isEdit = true;
@@ -125,13 +120,6 @@ export default {
       if (event.keyCode === 13 && this.isEdit) {
         this.onEdit();
       }
-    },
-    onTypeChange(value) {
-      this.$emit('saveEvent', {
-        id: this.id,
-        key: 'type',
-        val: value,
-      });
     },
     onModeChange(value) {
       this.$emit('saveEvent', {
@@ -179,6 +167,19 @@ export default {
         })
         .catch(() => {});
     },
+    onTagClick(val) {
+      if (this.isEdit) {
+        this.vCmd += val;
+      }
+    },
   },
 };
 </script>
+
+<style>
+.options-tag-group span {
+  cursor: pointer;
+  margin: 0 5px;
+  user-select: none;
+}
+</style>

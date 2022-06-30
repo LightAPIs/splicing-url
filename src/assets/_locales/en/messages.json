@@ -9,10 +9,10 @@
     "message": "Enter the URL"
   },
   "optionsSplice": {
-    "message": "URL header for splicing:"
+    "message": "Splice commands:"
   },
   "optionsType": {
-    "message": "The current URL section for splicing: "
+    "message": "Optional parameters: "
   },
   "optionsOpen": {
     "message": "Open mode: "

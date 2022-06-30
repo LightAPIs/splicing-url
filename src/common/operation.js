@@ -6,11 +6,10 @@ const operation = {
       let used = {
         id: 'none',
         name: '',
-        prefix: '',
-        type: '1',
         mode: '1',
         focus: '1',
         active: false,
+        cmd: '',
       };
       if (groups.length > 0) {
         let had = false;
@@ -29,8 +28,8 @@ const operation = {
         if (!chrome.runtime.lastError && tabs && tabs.length > 0) {
           const tabUrl = tabs[0].url;
           const tabId = tabs[0].id;
-          const { prefix = '', type = '1', mode = '1', focus = '1' } = used;
-          this._openUrl(tabUrl, tabId, prefix, type, mode, focus);
+          const { cmd = '', mode = '1', focus = '1' } = used;
+          this._openUrl(tabUrl, tabId, cmd, mode, focus);
         }
       });
     } else {
@@ -49,44 +48,17 @@ const operation = {
           const tabId = tabs[0].id;
           actived.forEach((ele, index) => {
             setTimeout(() => {
-              const { prefix = '', type = '1', mode = '1', focus } = ele;
-              this._openUrl(tabUrl, tabId, prefix, type, mode, focus);
+              const { cmd = '', mode = '1', focus } = ele;
+              this._openUrl(tabUrl, tabId, cmd, mode, focus);
             }, interval * index);
           });
         }
       });
     }
   },
-  _openUrl(tabUrl, tabId, prefix = '', type = '1', mode = '1', focus = '1') {
-    let pre = prefix;
-    try {
-      const preUri = new URL(prefix);
-      pre = preUri.href;
-    } catch (_e) {
-      pre = '';
-    }
-
+  _openUrl(tabUrl, tabId, cmd = '', mode = '1', focus = '1') {
     const uri = new URL(tabUrl);
-    let suffix = '';
-    switch (type) {
-      case '2':
-        suffix = uri.href.replace(uri.protocol + '//', '');
-        break;
-      case '3':
-        suffix = uri.origin;
-        break;
-      case '4':
-        suffix = uri.hostname;
-        break;
-      case '5':
-        suffix = uri.href.replace(uri.origin, '');
-        break;
-      case '1':
-      default:
-        suffix = uri.href;
-        break;
-    }
-    const openUrl = pre + suffix;
+    const openUrl = this._convertCmd(uri, cmd);
 
     switch (mode) {
       case '1':
@@ -106,6 +78,24 @@ const operation = {
         });
         break;
     }
+  },
+  _convertCmd(uri, cmd) {
+    return cmd.replace(/{[^{}]+?}/g, arg0 => {
+      switch (arg0) {
+        case '{HREF}':
+          return uri.href;
+        case '{LINK}':
+          return uri.href.replace(uri.protocol + '//', '');
+        case '{ORIGIN}':
+          return uri.origin;
+        case '{HOSTNAME}':
+          return uri.hostname;
+        case '{PATH}':
+          return uri.href.replace(uri.origin, '');
+        default:
+          return arg0;
+      }
+    });
   },
 };
 

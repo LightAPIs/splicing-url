@@ -15,8 +15,7 @@
             :id="item.id"
             :index="index + 1"
             :name="item.name"
-            :prefix="item.prefix"
-            :type-value="item.type"
+            :cmd="item.cmd"
             :mode="item.mode"
             :focus="item.focus"
             :active="item.active"
@@ -65,7 +64,7 @@ export default {
           }
         });
         chrome.storage.local.set({
-          groups: saveGroups,
+          cmd_groups: saveGroups,
         });
 
         if (key === 'name') {
@@ -97,7 +96,7 @@ export default {
             }
           });
           chrome.storage.local.set({
-            groups: saveGroups,
+            cmd_groups: saveGroups,
           });
 
           chrome.storage.local.get(['page'], res => {
@@ -114,8 +113,7 @@ export default {
       this.groups.push({
         id,
         name: '',
-        prefix: '',
-        type: '1',
+        cmd: '',
         mode: '1',
         focus: '1',
         active: false,
@@ -129,7 +127,7 @@ export default {
         }
       });
       chrome.storage.local.set({
-        groups: saveGroups,
+        cmd_groups: saveGroups,
       });
 
       chrome.storage.local.get(['page'], res => {
@@ -147,9 +145,9 @@ export default {
     },
   },
   mounted() {
-    chrome.storage.local.get(['groups'], res => {
-      const { groups = [] } = res;
-      this.groups = Object.assign([], groups);
+    chrome.storage.local.get(['cmd_groups'], res => {
+      const { cmd_groups = [] } = res;
+      this.groups = Object.assign([], cmd_groups);
       this.groups.forEach(item => {
         this.exists.push(item.id);
       });
