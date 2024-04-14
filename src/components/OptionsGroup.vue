@@ -19,9 +19,7 @@
             </el-input>
           </el-col>
           <el-col :span="4">
-            <el-button :type="isEdit ? 'warning' : 'primary'" @click="onEdit">{{
-              isEdit ? $ui.get('optionsSave') : $ui.get('optionsEdit')
-            }}</el-button>
+            <el-button :type="isEdit ? 'warning' : 'primary'" @click="onEdit">{{ isEdit ? $ui.get('optionsSave') : $ui.get('optionsEdit') }}</el-button>
           </el-col>
         </el-row>
         <div class="options-settings">
@@ -34,6 +32,7 @@
             <el-tag type="info" title="e.g., hppts://www.example.com" @click="onTagClick('{ORIGIN}')">{ORIGIN}</el-tag>
             <el-tag type="warning" title="e.g., www.example.com" @click="onTagClick('{HOSTNAME}')">{HOSTNAME}</el-tag>
             <el-tag type="danger" title="e.g., /path/to/test.php?type=0#extra" @click="onTagClick('{PATH}')">{PATH}</el-tag>
+            <el-tag color="white" title="e.g., extra" @click="onTagClick('{HASH}')">{HASH}</el-tag>
           </span>
         </div>
         <div class="options-settings">

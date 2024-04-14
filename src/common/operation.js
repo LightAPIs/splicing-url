@@ -92,6 +92,8 @@ const operation = {
           return uri.hostname;
         case '{PATH}':
           return uri.href.replace(uri.origin, '');
+        case '{HASH}':
+          return uri.hash.replace(/^#/, '');
         default:
           return arg0;
       }

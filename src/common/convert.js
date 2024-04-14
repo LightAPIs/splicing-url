@@ -27,6 +27,8 @@ const convert = {
         return '{HOSTNAME}';
       case '5':
         return '{PATH}';
+      case '6':
+        return '{HASH}';
       case '1':
       default:
         return '{HREF}';
