@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Splicing URL (Dev)",
   "description": "__MSG_extDes__",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "pana",
   "homepage_url": "https://github.com/LightAPIs/splicing-url",
   "default_locale": "en",
